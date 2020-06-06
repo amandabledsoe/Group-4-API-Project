@@ -1,6 +1,6 @@
 ﻿
-@using GC_Capstone5.Models
-
-@model Movie
-
-<p>@Model.title</p>
+<h2>Search for Movies by Title</h2>
+<form action="/Movie/GetMoviesByTitle" method="post">
+    <input type="text" name="Movie" />
+    <input type="submit" value="Search" />
+</form>
