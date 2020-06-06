@@ -12,12 +12,12 @@ namespace GC_Capstone5.Controllers
     {
         //private readonly string _apiKey;
         private readonly MovieDAL _movieDAL;
-        //private readonly FavoriteDbContext _context; //CHANGE WHEN WE HAVE A DATABASE NAME
+        private readonly FavoriteMovieDbContext _context; 
 
-        public MovieController(IConfiguration configuration)//, FavoriteDBContext context) //CHANGE WHEN WE HAVE A DATABASE NAME
+        public MovieController(IConfiguration configuration, FavoriteMovieDbContext context) 
         {
             _movieDAL = new MovieDAL(configuration);
-            //_context = context;
+            _context = context;
         }
 
         //public IActionResult Index()

@@ -12,6 +12,7 @@ using GC_Capstone5.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GC_Capstone5.Models;
 
 namespace GC_Capstone5
 {
@@ -27,6 +28,9 @@ namespace GC_Capstone5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = "Server=.\\SQLExpress;Database=FavoriteMovieDb;Trusted_Connection=True;ConnectRetryCount=0;";
+            services.AddDbContext<FavoriteMovieDbContext>(options => options.UseSqlServer(connection));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
