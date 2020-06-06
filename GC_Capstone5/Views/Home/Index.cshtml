@@ -2,8 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-<p>@ViewBag.Test</p>
+<h1>Favorites</h1>
+
+@model List<Favorite>
+
+<table class="table">
+    <tr>
+        <th>Title</th>
+        <th>Genre</th>
+        <th>Release Year</th>
+        <th>Runtime</th>
+        <th>Poster</th>
+    </tr>
+    @foreach (var fav in Model)
+    {
+        <tr>
+            <td>@fav.AspNetUsersId</td>
+            <td>@fav.Title</td>
+            <td>@fav.Genre</td>
+            <td>@fav.Year</td>
+            <td>@fav.Runtime</td>
+            <td>@fav.PosterPath</td>
+            <td>
+                <a href="/Movie/DeleteFavorite?id=@fav.Id" class="btn-danger">Delete from Favorites</a>
+            </td>
+
+        </tr>
+    }
+</table>
