@@ -13,13 +13,13 @@ namespace GC_Capstone5.Models
     {
         private readonly string _apiKey;
         private readonly string _apiBearerToken;
+        public MovieConfigurationRoot ApiConfig { get; set; }
 
         public MovieDAL(IConfiguration configuration)
         {
             _apiKey = configuration.GetSection("ApiKeys")["MovieAPI"];
             _apiBearerToken = configuration.GetSection("ApiBearerTokens")["MovieDbBearerToken"];
         }
-
         public HttpClient GetClient()
         {
             var client = new HttpClient();
@@ -28,7 +28,6 @@ namespace GC_Capstone5.Models
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiBearerToken);
             return client;
         }
-
         public async Task<string> GetRawJSON(int movieId)
         {
             var client = GetClient();
@@ -43,7 +42,79 @@ namespace GC_Capstone5.Models
 //            var response = await client.GetAsync($"/3/movie/{movieId}?api_key={_apiKey}");
             var movieJSON = await response.Content.ReadAsStringAsync();
             Movie movie = JsonSerializer.Deserialize<Movie>(movieJSON);
+            int ignore = await GetApiConfiguration();
+            ApplyApiImageWebPath(movie);
             return movie;
         }
+        public async Task<SearchRootobject> GetMovieByKeyword(string keyword, string? pageNumber)
+        {
+            string resource = $"/3/search/movie?query={keyword}";
+            if (!(pageNumber is null) && int.Parse(pageNumber) > 0)
+            {
+                resource += $"&page={pageNumber}";
+            }
+            var client = GetClient();
+            var response = await client.GetAsync(resource);
+            var movieJSON = await response.Content.ReadAsStringAsync();
+            SearchRootobject searchRootobject = JsonSerializer.Deserialize<SearchRootobject>(movieJSON);
+            int ignore = await GetApiConfiguration();
+
+            for (int i = 0; i < searchRootobject.results.Length; i++)
+            {
+                ApplyApiImageWebPath(searchRootobject.results[i]);
+            }
+            return searchRootobject;
+        }
+        #region INTERNAL_METHODS
+        private async Task<int> GetApiConfiguration()
+        {
+            if (this.ApiConfig is null)
+            {
+                var client = GetClient();
+                var response = await client.GetAsync("/3/configuration");
+                var configJSON = await response.Content.ReadAsStringAsync();
+                this.ApiConfig = JsonSerializer.Deserialize<MovieConfigurationRoot>(configJSON);
+            }
+            return 0;
+        }
+        private string GetImageUrl()
+        {
+            string url = "";
+            try
+            {
+                url = ApiConfig.images.base_url;
+                if (ApiConfig.images.poster_sizes.Length > 0)
+                {
+                    url += ApiConfig.images.poster_sizes[0];
+                }
+            }
+            catch
+            {
+
+            }
+            return url;
+        }
+        private string MakeApiUrl(string? resource)
+        {
+            // don't assign anything if the resource parameter is NULL
+            if (resource is null)
+            {
+                return null;
+            }
+            return GetImageUrl() + resource;
+        }
+        private void ApplyApiImageWebPath(Movie movie)
+        {
+            // Prefix the URI to each image so that the use of this object doesn't have to
+            // Don't assign anything if the poster_path is NULL
+            movie.poster_path =  MakeApiUrl(movie.poster_path);
+        }
+        private void ApplyApiImageWebPath(SearchResult movie)
+        {
+            // Prefix the URI to each image so that the use of this object doesn't have to
+            // Don't assign anything if the poster_path is NULL
+            movie.poster_path = MakeApiUrl(movie.poster_path);
+        }
+        #endregion
     }
 }
