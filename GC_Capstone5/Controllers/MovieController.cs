@@ -71,5 +71,6 @@ namespace GC_Capstone5.Controllers
             Movie movie = await _movieDAL.GetMovie(76341);
             return View("Index", movie);
         }
+
     }
 }

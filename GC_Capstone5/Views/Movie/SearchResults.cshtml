@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "SearchResults";
+}
+
+<h1>SearchResults</h1>
+
+@model Movie
+
+<div>
+    <table>
+        <tr>
+            <th>Movie Title</th>
+            <th>Movie Genre</th>
+            <th>Movie Year</th>
+            <th>Movie Runtime</th>
+            <th>Movie Poster</th>
+        </tr>
+    @foreach(Movie movie in Model)
+    {
+        <tr>
+            <td>@Model.title</td>
+            <td>@Model.genres</td>
+            <td>@Model.release_date</td>
+            <td>@Model.runtime</td>
+            <td>@Model.poster_path</td>
+        </tr>
+    }
+    </table>
+</div>
+<br />
+<div>
+    <button onclick="//insert code here to point to new page">Previous Page</button>
+    <button onclick="//insert code here to point to new page">Next Page</button>
+</div>
