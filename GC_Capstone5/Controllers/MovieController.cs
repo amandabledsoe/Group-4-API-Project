@@ -14,11 +14,11 @@ namespace GC_Capstone5.Controllers
         private readonly MovieDAL _movieDAL;
         //private readonly FavoriteDbContext _context; //CHANGE WHEN WE HAVE A DATABASE NAME
 
-        //public MovieController(IConfiguration configuration, FavoriteDBContext context) //CHANGE WHEN WE HAVE A DATABASE NAME
-        //{
-        //    _movieDAL = new MovieDAL(configuration);
-        //    _context = context;
-        //}
+        public MovieController(IConfiguration configuration)//, FavoriteDBContext context) //CHANGE WHEN WE HAVE A DATABASE NAME
+        {
+            _movieDAL = new MovieDAL(configuration);
+            //_context = context;
+        }
 
         //public IActionResult Index()
         //{
@@ -66,10 +66,10 @@ namespace GC_Capstone5.Controllers
 
 
 
-        //public async Task<IActionResult> IndexAsync()
-        //{
-        //    Movie movie = await _movieDAL.GetMovie(76341);
-        //    return View("Index", movie);
-        //}
+        public async Task<IActionResult> IndexAsync()
+        {
+            Movie movie = await _movieDAL.GetMovie(76341);
+            return View("Index", movie);
+        }
     }
 }

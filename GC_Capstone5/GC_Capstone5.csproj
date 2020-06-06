@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-GC_Capstone5-B16BEFF0-E6A4-4AB9-913E-6280E62A8E5B</UserSecretsId>
+    <UserSecretsId>aspnet-GC_Capstone5-63D80E6E-C7F6-4AE0-B599-DDCBE3FB2110</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
