@@ -19,8 +19,10 @@ namespace GC_Capstone5.Controllers
         }
         public async Task<IActionResult> IndexAsync()
         {
-            Movie movie = await  _movieDAL.GetMovie(76341);
-            return View("Index", movie);
+            string keyword = "madonna";
+            string? pageNumber = null;
+            SearchRootobject results = await _movieDAL.GetMovieByKeyword(keyword, pageNumber);
+            return View("Index", results);
         }
     }
 }
