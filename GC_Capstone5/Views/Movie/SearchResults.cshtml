@@ -24,6 +24,7 @@
                 <td>@movie.vote_average</td>
                 <td>@movie.release_date</td>
                 <td rowspan="2">
+                    <a href="/Movie/AddToFavorites?id=@movie.id">Add to favorites</a>
                     <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
                 </td>
             </tr>

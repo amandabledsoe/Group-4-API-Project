@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using GC_Capstone5.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -20,10 +22,6 @@ namespace GC_Capstone5.Controllers
             _context = context;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public async Task<IActionResult> GetMoviesByTitle(string keyword, string pageNumber)
         {
@@ -31,37 +29,46 @@ namespace GC_Capstone5.Controllers
             ViewBag.keyword = keyword;
             return View("SearchResults", searchResults);
         }
+        [Authorize]
+        public IActionResult Favorites()
+        {
+            string id = User.FindFirst(ClaimTypes.NameIdentifier).Value; //gets user ID
+            List<Favorite> favorites = new List<Favorite>();
+            favorites = _context.Favorite.Where(x => x.UserId == id).ToList();
+            return View(favorites);
+        }
+        [Authorize]
+        public async Task<IActionResult> AddToFavoritesAsync(int id)
+        {
+            Movie movieToAdd = await _movieDAL.GetMovie(id);
+            Favorite newFav = new Favorite();
 
-        //public IActionResult AddToFavorites(Movie movieToAdd)
-        //{
-        //    Favorite newFav = new Favorite();
-        //    newFav.title = movieToAdd.title;
-        //    newFav.genre = movieToAdd.genres; // not sure if this will be the same
-        //    newFav.release_date = movieToAdd.release_date;
-        //    newFav.runtime = movieToAdd.runtime;
-        //    newFav.poster_path = movieToAdd.poster_path;
-        //    //newFav.userID = code for grabbing current user ID - to be added later
+            newFav.Title = movieToAdd.title;
+            newFav.ReleaseDate = movieToAdd.release_date;
+            newFav.RunTime = movieToAdd.runtime;
+            newFav.PosterPath = movieToAdd.poster_path;
+            newFav.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Favorite.Add(newFav);  //requires db to be setup
-        //        _context.SaveChanges();
-        //    }
+            if (ModelState.IsValid)
+            {
+                _context.Favorite.Add(newFav); 
+                _context.SaveChanges();
+            }
 
-        //    return RedirectToAction("Favorites");
-        //}
+            return RedirectToAction("Favorites");
+        }
+        [Authorize]
 
-
-        //public IActionResult RemoveFromFavorites(int id)
-        //{
-        //    Favorite toRemove = _context.Favorite.Find(id);
-        //    if(toRemove != null)
-        //    {
-        //        _context.Favorite.Remove(toRemove);
-        //        _context.SaveChanges();
-        //    }
-        //    return RedirectToAction("Favorites");
-        //}
+        public IActionResult RemoveFromFavorites(int id)
+        {
+            Favorite toRemove = _context.Favorite.Find(id);
+            if (toRemove != null)
+            {
+                _context.Favorite.Remove(toRemove);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Favorites");
+        }
 
 
 
