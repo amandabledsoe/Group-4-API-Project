@@ -52,7 +52,8 @@
     if (nextPage <= Model.total_pages)
     {
         <div>
-            <form action="/movie/GetMoviesByTitle" method="post">
+
+            <form action="/Movie/GetMoviesByTitle" method="post">
                 <input type="hidden" name="keyword" value="@ViewBag.keyword" />
                 <input type="hidden" name="pageNumber" value="@nextPage" />
                 <input type="submit" value="Next" />
@@ -60,7 +61,4 @@
         </div>
     }
 }
-@*<div style="align-items:center;">
-        <button class="btn-dark" onclick="//insert code here to point to new page">Previous Page</button>
-        <button class="btn-dark" onclick="//insert code here to point to new page">Next Page</button>
-    </div>*@
+
