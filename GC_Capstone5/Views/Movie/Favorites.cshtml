@@ -26,3 +26,33 @@
         </tr>
     }
 </table>
+
+@*<div>
+    <table>
+        <tr class="text-center border-bottom">
+            <th> </th>
+            <th>TITLE</th>
+            <th>VOTE AVERAGE</th>
+            <th>RELEASE DATE</th>
+            <th> </th>
+        </tr>
+        @foreach (var movie in searchResults)
+        {
+            <tr class="text-center">
+                <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
+                <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
+                <td>@movie.vote_average</td>
+                <td>@movie.release_date</td>
+                <td rowspan="2">
+                    <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-sm-left" colspan="3">@movie.overview</td>
+            </tr>
+            <tr class="border-bottom">
+                <td colspan="6"> </td>
+            </tr>
+        }
+    </table>
+</div>*@

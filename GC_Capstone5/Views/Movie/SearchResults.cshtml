@@ -3,33 +3,64 @@
     ViewData["Title"] = "SearchResults";
 }
 
-<h1>SearchResults</h1>
+<h4>Your Search Results</h4>
 
 @model SearchRootobject
-@{List<SearchResult> something = Model.results.ToList<SearchResult>(); }
+@{List<SearchResult> searchResults = Model.results.ToList<SearchResult>(); }
 <div>
     <table>
-        <tr>
-            <th>Movie Title</th>
-            <th>Movie Genre</th>
-            <th>Movie Year</th>
-            <th>Movie Runtime</th>
-            <th>Movie Poster</th>
+        <tr class="text-center border-bottom">
+            <th> </th>
+            <th>TITLE</th>
+            <th>VOTE AVERAGE</th>
+            <th>RELEASE DATE</th>
+            <th> </th>
         </tr>
-    @foreach(var movie in something)
-    {
-        <tr>
-            <td>@movie.title</td>
-            <td>@movie.genre_ids</td>
-            <td>@movie.release_date</td>
-            <td>@movie.original_title</td>
-            <td>@movie.poster_path</td>
-        </tr>
-    }
+        @foreach (var movie in searchResults)
+        {
+            <tr class="text-center">
+                <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
+                <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
+                <td>@movie.vote_average</td>
+                <td>@movie.release_date</td>
+                <td rowspan="2">
+                    <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-sm-left" colspan="3">@movie.overview</td>
+            </tr>
+            <tr class="border-bottom">
+                <td colspan="6"> </td>
+            </tr>
+        }
     </table>
 </div>
 <br />
-<div>
-    <button onclick="//insert code here to point to new page">Previous Page</button>
-    <button onclick="//insert code here to point to new page">Next Page</button>
-</div>
+@{int prevPage = Model.page - 1;
+    if (prevPage > 0)
+    {
+        <div>
+            <form action="/movie/GetMoviesByTitle" method="post">
+                <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+                <input type="hidden" name="pageNumber" value="@prevPage" />
+                <input type="submit" value="previous" />
+            </form>
+        </div>
+    }
+    int nextPage = Model.page + 1;
+    if (nextPage <= Model.total_pages)
+    {
+        <div>
+            <form action="/movie/GetMoviesByTitle" method="post">
+                <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+                <input type="hidden" name="pageNumber" value="@nextPage" />
+                <input type="submit" value="Next" />
+            </form>
+        </div>
+    }
+}
+@*<div style="align-items:center;">
+        <button class="btn-dark" onclick="//insert code here to point to new page">Previous Page</button>
+        <button class="btn-dark" onclick="//insert code here to point to new page">Next Page</button>
+    </div>*@

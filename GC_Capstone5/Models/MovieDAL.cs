@@ -20,6 +20,7 @@ namespace GC_Capstone5.Models
             _apiKey = configuration.GetSection("ApiKeys")["MovieAPI"];
             _apiBearerToken = configuration.GetSection("ApiBearerTokens")["MovieDbBearerToken"];
         }
+
         public HttpClient GetClient()
         {
             var client = new HttpClient();
@@ -27,6 +28,16 @@ namespace GC_Capstone5.Models
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _apiBearerToken);
             return client;
+        }
+
+        public async Task<GenreRoot> GetGenres()
+        {
+            string resource = $"/3/genre/movie/list";
+            var client = GetClient();
+            var response = await client.GetAsync(resource);
+            var genreJSON = await response.Content.ReadAsStringAsync();
+            GenreRoot genreRoot = JsonSerializer.Deserialize<GenreRoot>(genreJSON);
+            return genreRoot;
         }
         public async Task<string> GetRawJSON(int movieId)
         {

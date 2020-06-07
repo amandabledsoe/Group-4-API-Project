@@ -25,9 +25,10 @@ namespace GC_Capstone5.Controllers
         //    return View();
         //}
 
-        public async Task<IActionResult> GetMoviesByTitle(string keyword)
+        public async Task<IActionResult> GetMoviesByTitle(string keyword, string pageNumber)
         {
-            SearchRootobject searchResults = await _movieDAL.GetMovieByKeyword(keyword,null); //replace with method name from DAL that returns results by title
+            SearchRootobject searchResults = await _movieDAL.GetMovieByKeyword(keyword,pageNumber); //replace with method name from DAL that returns results by title
+            ViewBag.keyword = keyword;
             return View("SearchResults", searchResults);
         }
 

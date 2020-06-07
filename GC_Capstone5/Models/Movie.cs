@@ -43,6 +43,12 @@ namespace GC_Capstone5.Models
         }
     }
 
+     public class GenreRoot
+    {
+        public Genre[] genres { get; set; }
+    }
+
+
     public class Genre
     {
         public int id { get; set; }
