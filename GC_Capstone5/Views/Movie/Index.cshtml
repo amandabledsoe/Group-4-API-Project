@@ -1,7 +1,10 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Index";
+}
+
 
 <h2>Search for Movies by Title</h2>
 <form action="/Movie/GetMoviesByTitle" method="post">
-    <input type="text" name="Movie" />
+    <input type="text" name="keyword" />
     <input type="submit" value="Search" />
 </form>

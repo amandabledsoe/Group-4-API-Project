@@ -5,8 +5,8 @@
 
 <h1>SearchResults</h1>
 
-@model Movie
-
+@model SearchRootobject
+@{List<SearchResult> something = Model.results.ToList<SearchResult>(); }
 <div>
     <table>
         <tr>
@@ -16,14 +16,14 @@
             <th>Movie Runtime</th>
             <th>Movie Poster</th>
         </tr>
-    @foreach(Movie movie in Model)
+    @foreach(var movie in something)
     {
         <tr>
-            <td>@Model.title</td>
-            <td>@Model.genres</td>
-            <td>@Model.release_date</td>
-            <td>@Model.runtime</td>
-            <td>@Model.poster_path</td>
+            <td>@movie.title</td>
+            <td>@movie.genre_ids</td>
+            <td>@movie.release_date</td>
+            <td>@movie.original_title</td>
+            <td>@movie.poster_path</td>
         </tr>
     }
     </table>

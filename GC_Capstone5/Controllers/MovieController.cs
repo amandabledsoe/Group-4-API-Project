@@ -25,11 +25,11 @@ namespace GC_Capstone5.Controllers
         //    return View();
         //}
 
-        //public async Task<IActionResult> GetMoviesByTitle(string keyword)
-        //{
-        //    List<Movie> searchResults = await _movieDAL.METHODNAME(keyword); //replace with method name from DAL that returns results by title
-        //    return View("SearchResults", searchResults);
-        //}
+        public async Task<IActionResult> GetMoviesByTitle(string keyword)
+        {
+            SearchRootobject searchResults = await _movieDAL.GetMovieByKeyword(keyword,null); //replace with method name from DAL that returns results by title
+            return View("SearchResults", searchResults);
+        }
 
         //public IActionResult AddToFavorites(Movie movieToAdd)
         //{
