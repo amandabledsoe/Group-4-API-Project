@@ -20,7 +20,8 @@
                 <td rowspan="3" class="border-bottom"><img src="@fav.PosterPath" /></td>
                 <td colspan="2"><b><h5 class="text-info">@fav.Title.ToUpper()</h5></b></td>
                 <td>@fav.RunTime</td>
-                <td>@fav.ReleaseDate</td>
+                <td>@Convert.ToDateTime(@fav.ReleaseDate).ToShortDateString()</td>
+                <td> </td>
                 <td>
                     <a href="/Movie/ConfirmRemove?id=@fav.Id" class="btn btn-danger">Delete from Favorites</a>
                 </td>

@@ -10,11 +10,14 @@
 <div>
     <p class="alert-danger">Are you sure you want to remove this movie from your favorites?</p>
     <table>
-        <tr>
-            <th> </th>
-            <th>Title</th>
-            <th>Vote Average</th>
-            <th>Release Date</th>
+        <tr class="text-center border-bottom">
+            <th></th>
+            <th>TITLE</th>
+            <th>
+                AVERAGE RATING
+                <p><small>out of 10</small></p>
+            </th>
+            <th>RELEASE DATE</th>
             <th> </th>
         </tr>
         
@@ -29,7 +32,7 @@
                 </td>
             </tr>
             <tr>
-                <td class="text-sm-left" colspan="3">@Model.Overview</td>
+                <td class="text-sm-center" colspan="3"><small>@Model.Overview</small></td>
             </tr>
             <tr class="border-bottom">
                 <td colspan="6"> </td>
