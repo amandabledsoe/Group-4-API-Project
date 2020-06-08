@@ -46,7 +46,7 @@ namespace GC_Capstone5.Controllers
             newFav.Title = movieToAdd.title;
             newFav.ReleaseDate = movieToAdd.release_date;
             newFav.RunTime = (int)movieToAdd.vote_average;
-            newFav.Genre = movieToAdd.overview;
+            newFav.Overview = movieToAdd.overview;
             newFav.PosterPath = movieToAdd.poster_path;
             newFav.UserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 

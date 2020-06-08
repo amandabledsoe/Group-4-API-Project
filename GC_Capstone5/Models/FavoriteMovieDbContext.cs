@@ -135,7 +135,9 @@ namespace GC_Capstone5.Models
 
             modelBuilder.Entity<Favorite>(entity =>
             {
-                entity.Property(e => e.Genre).HasMaxLength(50);
+                entity.HasIndex(e => e.UserId);
+
+                entity.Property(e => e.Overview).HasMaxLength(2000);
 
                 entity.Property(e => e.PosterPath).HasMaxLength(200);
 
@@ -143,9 +145,7 @@ namespace GC_Capstone5.Models
 
                 entity.Property(e => e.Title).HasMaxLength(170);
 
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
+                entity.Property(e => e.UserId).IsRequired();
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Favorite)
