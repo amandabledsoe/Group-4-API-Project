@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "SearchResults";
+    ViewData["Title"] = "Search Results";
 }
 
 <h4>Your Search Results</h4>
@@ -20,54 +20,85 @@ else
     <div>
         <table>
             <tr class="text-center border-bottom">
-                <th> </th>
+                <th></th>
+                <th></th>
                 <th>TITLE</th>
                 <th>VOTE AVERAGE</th>
                 <th>RELEASE DATE</th>
+                <th> </th>
                 <th> </th>
             </tr>
             @foreach (var movie in searchResults)
             {
                 <tr class="text-center">
                     <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
-                    <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
+                    <td colspan="2"><b><h5 class="text-info">@movie.title.ToUpper()</h5></b></td>
                     <td>@movie.vote_average</td>
                     <td>@movie.release_date</td>
+                    <td> </td>
                     <td rowspan="2">
-                        <a href="/Movie/AddToFavorites?id=@movie.id">Add to favorites</a>
-                        <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                        <a class="btn btn-success" href="/Movie/AddToFavorites?id=@movie.id" value="Add To Favorites">Add To Favorites</a>
                     </td>
                 </tr>
-                <tr>
-                    <td class="text-sm-left" colspan="3">@movie.overview</td>
+                <tr class="text-sm-center">
+                    <td></td>
+                    <td colspan="3"><small>@movie.overview</small></td>
                 </tr>
                 <tr class="border-bottom">
                     <td colspan="6"> </td>
                 </tr>
             }
         </table>
-        <br />
-        @if (prevPage > 0)
-        {
-        <div>
-            <form action="/movie/GetMoviesByTitle" method="post">
-                <input type="hidden" name="keyword" value="@ViewBag.keyword" />
-                <input type="hidden" name="pageNumber" value="@prevPage" />
-                <input type="submit" value="previous" />
-            </form>
-        </div>
-        }
-
-        @if (nextPage <= Model.total_pages)
-        {
-        <div>
-            <form action="/Movie/GetMoviesByTitle" method="post">
-                <input type="hidden" name="keyword" value="@ViewBag.keyword" />
-                <input type="hidden" name="pageNumber" value="@nextPage" />
-                <input type="submit" value="Next" />
-            </form>
-        </div>
-        }
     </div>
+    <br />
+    <div class="center">
+        <table class="table table-borderless">
+            <tr>
+                <td colspan="4"> </td>
+                <td>
+                @if(prevPage > 0)
+                {
+                <form action="/movie/GetMoviesByTitle" method="post">
+                    <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+                    <input type="hidden" name="pageNumber" value="@prevPage" />
+                    <input class="btn btn-info" type="submit" value="Previous" />
+                </form>
+                }
+                </td>
+                <td>
+                @if(nextPage <= Model.total_pages)
+                {
+                <form action="/Movie/GetMoviesByTitle" method="post">
+                    <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+                    <input type="hidden" name="pageNumber" value="@nextPage" />
+                    <input class="btn btn-info" type="submit" value="Next" />
+                </form>
+                }
+                </td>
+                <td colspan="4"> </td>
+            </tr>
+        </table>
+    </div>
+    @*@if (prevPage > 0)
+    {
+    <div class="center">
+        <form action="/movie/GetMoviesByTitle" method="post">
+            <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+            <input type="hidden" name="pageNumber" value="@prevPage" />
+            <input class="btn btn-secondary" type="submit" value="previous" />
+        </form>
+    </div>
+    }
+
+    @if (nextPage <= Model.total_pages)
+    {
+    <div class="center">
+        <form action="/Movie/GetMoviesByTitle" method="post">
+            <input type="hidden" name="keyword" value="@ViewBag.keyword" />
+            <input type="hidden" name="pageNumber" value="@nextPage" />
+            <input class="btn btn-secondary" type="submit" value="Next" />
+        </form>
+    </div>
+    }*@
 }
 

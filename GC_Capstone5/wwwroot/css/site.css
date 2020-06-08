@@ -89,4 +89,9 @@ body {
     text-align: center;
 }
 
-
+#movieBackdrop {
+    background-image: url(https://images.financialexpress.com/2020/05/Cinema-halls-660x440-620x413.jpg );
+    background-position: right bottom, left top;
+    background-repeat: no-repeat, repeat;
+    padding: 15px;
+}
