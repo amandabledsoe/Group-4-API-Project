@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "ConfirmRemove";
+}
+
+<h1>ConfirmRemove</h1>
+
+@model Favorite
+
+<div>
+    <p class="alert-danger">Are you sure you want to remove this movie from your favorites?</p>
+    <table>
+        <tr>
+            <th> </th>
+            <th>Title</th>
+            <th>Vote Average</th>
+            <th>Release Date</th>
+            <th> </th>
+        </tr>
+        
+            <tr class="text-center">
+                <td rowspan="3" class="border-bottom"><img src="@Model.PosterPath" /></td>
+                <td class="text-lg-center text-primary"><b>@Model.Title.ToUpper()</b></td>
+                <td>@Model.RunTime</td>
+                <td>@Model.ReleaseDate</td>
+
+                <td>
+                    <a href="/Movie/RemoveFromFavorites?id=@Model.Id" class="btn-danger">Delete from Favorites</a>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-sm-left" colspan="3">@Model.Genre</td>
+            </tr>
+            <tr class="border-bottom">
+                <td colspan="6"> </td>
+            </tr>
+        
+    </table>
+</div>
