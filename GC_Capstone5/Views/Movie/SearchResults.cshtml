@@ -6,41 +6,49 @@
 <h4>Your Search Results</h4>
 
 @model SearchRootobject
-@{List<SearchResult> searchResults = Model.results.ToList<SearchResult>(); }
-<div>
-    <table>
-        <tr class="text-center border-bottom">
-            <th> </th>
-            <th>TITLE</th>
-            <th>VOTE AVERAGE</th>
-            <th>RELEASE DATE</th>
-            <th> </th>
-        </tr>
-        @foreach (var movie in searchResults)
+
+@if (Model is null || Model.results == null)
+{
+    <p>No match found!</p>
+}
+else
+{
+    List<SearchResult> searchResults = Model.results.ToList<SearchResult>();
+    int prevPage = Model.page - 1;
+    int nextPage = Model.page + 1;
+
+    <div>
+        <table>
+            <tr class="text-center border-bottom">
+                <th> </th>
+                <th>TITLE</th>
+                <th>VOTE AVERAGE</th>
+                <th>RELEASE DATE</th>
+                <th> </th>
+            </tr>
+            @foreach (var movie in searchResults)
+            {
+                <tr class="text-center">
+                    <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
+                    <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
+                    <td>@movie.vote_average</td>
+                    <td>@movie.release_date</td>
+                    <td rowspan="2">
+                        <a href="/Movie/AddToFavorites?id=@movie.id">Add to favorites</a>
+                        <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-sm-left" colspan="3">@movie.overview</td>
+                </tr>
+                <tr class="border-bottom">
+                    <td colspan="6"> </td>
+                </tr>
+            }
+        </table>
+        <br />
+        @if (prevPage > 0)
         {
-            <tr class="text-center">
-                <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
-                <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
-                <td>@movie.vote_average</td>
-                <td>@movie.release_date</td>
-                <td rowspan="2">
-                    <a href="/Movie/AddToFavorites?id=@movie.id">Add to favorites</a>
-                    <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="text-sm-left" colspan="3">@movie.overview</td>
-            </tr>
-            <tr class="border-bottom">
-                <td colspan="6"> </td>
-            </tr>
-        }
-    </table>
-</div>
-<br />
-@{int prevPage = Model.page - 1;
-    if (prevPage > 0)
-    {
         <div>
             <form action="/movie/GetMoviesByTitle" method="post">
                 <input type="hidden" name="keyword" value="@ViewBag.keyword" />
@@ -48,18 +56,18 @@
                 <input type="submit" value="previous" />
             </form>
         </div>
-    }
-    int nextPage = Model.page + 1;
-    if (nextPage <= Model.total_pages)
-    {
-        <div>
+        }
 
+        @if (nextPage <= Model.total_pages)
+        {
+        <div>
             <form action="/Movie/GetMoviesByTitle" method="post">
                 <input type="hidden" name="keyword" value="@ViewBag.keyword" />
                 <input type="hidden" name="pageNumber" value="@nextPage" />
                 <input type="submit" value="Next" />
             </form>
         </div>
-    }
+        }
+    </div>
 }
 

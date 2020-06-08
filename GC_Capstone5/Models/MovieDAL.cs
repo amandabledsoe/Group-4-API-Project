@@ -59,20 +59,30 @@ namespace GC_Capstone5.Models
         }
         public async Task<SearchRootobject> GetMovieByKeyword(string keyword, string? pageNumber)
         {
-            string resource = $"/3/search/movie?query={keyword}";
-            if (!(pageNumber is null) && int.Parse(pageNumber) > 0)
+            SearchRootobject searchRootobject = null;
+            try
             {
-                resource += $"&page={pageNumber}";
-            }
-            var client = GetClient();
-            var response = await client.GetAsync(resource);
-            var movieJSON = await response.Content.ReadAsStringAsync();
-            SearchRootobject searchRootobject = JsonSerializer.Deserialize<SearchRootobject>(movieJSON);
-            int ignore = await GetApiConfiguration();
+                string resource = $"/3/search/movie?query={keyword}";
+                if (!(pageNumber is null) && int.Parse(pageNumber) > 0)
+                {
+                    resource += $"&page={pageNumber}";
+                }
+                var client = GetClient();
+                var response = await client.GetAsync(resource);
+                var movieJSON = await response.Content.ReadAsStringAsync();
+                searchRootobject = JsonSerializer.Deserialize<SearchRootobject>(movieJSON);
+                int ignore = await GetApiConfiguration();
 
-            for (int i = 0; i < searchRootobject.results.Length; i++)
+                if (searchRootobject != null)
+                {
+                   for (int i = 0; i < searchRootobject.results.Length; i++)
+                    {
+                        ApplyApiImageWebPath(searchRootobject.results[i]);
+                    }
+                }
+            }
+            catch
             {
-                ApplyApiImageWebPath(searchRootobject.results[i]);
             }
             return searchRootobject;
         }
