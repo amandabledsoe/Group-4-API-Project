@@ -3,56 +3,63 @@
 
 @model List<Favorite>
 
-<table class="table">
-    <tr>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>Release Year</th>
-        <th>Runtime</th>
-        <th>Poster</th>
-    </tr>
-    @foreach (var fav in Model)
-    {
-        <tr>
-            <td>@fav.Title</td>
-            <td>@fav.Genre</td>
-            <td>@fav.ReleaseDate</td>
-            <td>@fav.RunTime</td>
-            <td>@fav.PosterPath</td>
-            <td>
-                <a href="/Movie/RemoveFromFavorites?id=@fav.Id" class="btn-danger">Delete from Favorites</a>
-            </td>
-
-        </tr>
-    }
-</table>
-
-@*<div>
+<div>
     <table>
-        <tr class="text-center border-bottom">
+        <tr>
             <th> </th>
-            <th>TITLE</th>
-            <th>VOTE AVERAGE</th>
-            <th>RELEASE DATE</th>
+            <th>Title</th>
+            <th>Vote Average</th>
+            <th>Release Date</th>
             <th> </th>
         </tr>
-        @foreach (var movie in searchResults)
+        @foreach (var fav in Model)
         {
             <tr class="text-center">
-                <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
-                <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
-                <td>@movie.vote_average</td>
-                <td>@movie.release_date</td>
-                <td rowspan="2">
-                    <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                <td rowspan="3" class="border-bottom"><img src="@fav.PosterPath" /></td>
+                <td class="text-lg-center text-primary"><b>@fav.Title.ToUpper()</b></td>
+                <td>@fav.RunTime</td>
+                <td>@fav.ReleaseDate</td>
+
+                <td>
+                    <a href="/Movie/RemoveFromFavorites?id=@fav.Id" class="btn-danger">Delete from Favorites</a>
                 </td>
             </tr>
             <tr>
-                <td class="text-sm-left" colspan="3">@movie.overview</td>
+                <td class="text-sm-left" colspan="3">@fav.Genre</td>
             </tr>
             <tr class="border-bottom">
                 <td colspan="6"> </td>
             </tr>
         }
     </table>
-</div>*@
+</div>
+
+@*<div>
+        <table>
+            <tr class="text-center border-bottom">
+                <th> </th>
+                <th>TITLE</th>
+                <th>VOTE AVERAGE</th>
+                <th>RELEASE DATE</th>
+                <th> </th>
+            </tr>
+            @foreach (var movie in searchResults)
+            {
+                <tr class="text-center">
+                    <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
+                    <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
+                    <td>@movie.vote_average</td>
+                    <td>@movie.release_date</td>
+                    <td rowspan="2">
+                        <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-sm-left" colspan="3">@movie.overview</td>
+                </tr>
+                <tr class="border-bottom">
+                    <td colspan="6"> </td>
+                </tr>
+            }
+        </table>
+    </div>*@
