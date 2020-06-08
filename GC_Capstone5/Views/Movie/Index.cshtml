@@ -13,7 +13,8 @@
             top: 30%;
             width: 100%;
             text-align: center;
-            font-size: 18px;
+            font-size: 25px;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
 
         img {
@@ -26,7 +27,7 @@
 <body>
     <div class="container">
         <img src="~/images/Theater.jpg" width="1500" height="300">
-        <div class="center">Search for Movies by Title<br/>
+        <div class="center">Find Your Favorite Movies Here<br/>Start your Search Today!<br/>
             <form action="/Movie/GetMoviesByTitle" method="post">
                 <input type="text" name="keyword" />
                 <input type="submit" value="Search" />
