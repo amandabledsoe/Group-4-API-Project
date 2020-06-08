@@ -56,8 +56,6 @@ namespace GC_Capstone5.Controllers
                 }
             }
 
-
-
             newFav.Title = movieToAdd.title;
             newFav.ReleaseDate = movieToAdd.release_date;
             newFav.RunTime = (int)movieToAdd.vote_average;
@@ -74,7 +72,13 @@ namespace GC_Capstone5.Controllers
             return RedirectToAction("Favorites");
         }
         [Authorize]
-
+       
+        public IActionResult ConfirmRemove(int id)
+        {
+            Favorite toRemove = _context.Favorite.Find(id);
+            return View(toRemove);
+        }
+ 
         public IActionResult RemoveFromFavorites(int id)
         {
             Favorite toRemove = _context.Favorite.Find(id);
