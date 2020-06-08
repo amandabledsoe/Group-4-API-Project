@@ -1,31 +1,32 @@
 ﻿
-<h1>Favorites</h1>
+<h4>Your Favorite Movies</h4>
 
 @model List<Favorite>
 
 <div>
     <table>
-        <tr>
+        <tr class="text-center border-bottom">
             <th> </th>
-            <th>Title</th>
-            <th>Vote Average</th>
-            <th>Release Date</th>
+            <th> </th>
+            <th>TITLE</th>
+            <th>AVERAGE RATING
+            <p><small>out of 10</small></p></th>
+            <th>RELEASE DATE</th>
             <th> </th>
         </tr>
         @foreach (var fav in Model)
         {
             <tr class="text-center">
                 <td rowspan="3" class="border-bottom"><img src="@fav.PosterPath" /></td>
-                <td class="text-lg-center text-primary"><b>@fav.Title.ToUpper()</b></td>
+                <td colspan="2"><b><h5 class="text-info">@fav.Title.ToUpper()</h5></b></td>
                 <td>@fav.RunTime</td>
                 <td>@fav.ReleaseDate</td>
-
                 <td>
-                    <a href="/Movie/RemoveFromFavorites?id=@fav.Id" class="btn-danger">Delete from Favorites</a>
+                    <a href="/Movie/RemoveFromFavorites?id=@fav.Id" class="btn btn-danger">Delete from Favorites</a>
                 </td>
             </tr>
             <tr>
-                <td class="text-sm-left" colspan="3">@fav.Overview</td>
+                <td class="text-sm-center" colspan="3"><small>@fav.Overview</small></td>
             </tr>
             <tr class="border-bottom">
                 <td colspan="6"> </td>
@@ -33,33 +34,3 @@
         }
     </table>
 </div>
-
-@*<div>
-        <table>
-            <tr class="text-center border-bottom">
-                <th> </th>
-                <th>TITLE</th>
-                <th>VOTE AVERAGE</th>
-                <th>RELEASE DATE</th>
-                <th> </th>
-            </tr>
-            @foreach (var movie in searchResults)
-            {
-                <tr class="text-center">
-                    <td rowspan="3" class="border-bottom"><img src="@movie.poster_path" /></td>
-                    <td class="text-lg-center text-primary"><b>@movie.title.ToUpper()</b></td>
-                    <td>@movie.vote_average</td>
-                    <td>@movie.release_date</td>
-                    <td rowspan="2">
-                        <button class="btn-primary" onclick="/Movie/AddToFavorites?id=@movie.id">Add To Favorites</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-sm-left" colspan="3">@movie.overview</td>
-                </tr>
-                <tr class="border-bottom">
-                    <td colspan="6"> </td>
-                </tr>
-            }
-        </table>
-    </div>*@

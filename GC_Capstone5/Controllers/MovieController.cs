@@ -43,6 +43,21 @@ namespace GC_Capstone5.Controllers
             Movie movieToAdd = await _movieDAL.GetMovie(id);
             Favorite newFav = new Favorite();
 
+            //grabbing the current list of favorites
+            string userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            List<Favorite> favorites = new List<Favorite>();
+            favorites = _context.Favorite.Where(x => x.UserId == userId).ToList();
+            //checking to see if this is a duplicate to prevent duplicate adds
+            foreach(Favorite fav in favorites)
+            {
+                if(fav.Title == movieToAdd.title)
+                {
+                    return RedirectToAction("Favorites");
+                }
+            }
+
+
+
             newFav.Title = movieToAdd.title;
             newFav.ReleaseDate = movieToAdd.release_date;
             newFav.RunTime = (int)movieToAdd.vote_average;
